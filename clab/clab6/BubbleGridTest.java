@@ -6,10 +6,26 @@ public class BubbleGridTest {
     @Test
     public void testBasic() {
 
-        int[][] grid = {{1, 0, 0, 0},
-                        {1, 1, 1, 0}};
+        int[][] grid = {{1, 0, 0, 0, 0, 0, 0, 0},
+                        {1, 1, 1, 1, 1, 1, 1, 1}};
         int[][] darts = {{1, 0}};
-        int[] expected = {2};
+        int[] expected = {7};
+
+        validate(grid, darts, expected);
+    }
+
+    @Test
+    public void testInteresting() {
+        int[][] grid = {{1, 1, 0},
+                        {1, 0, 0},
+                        {1, 1, 0},
+                        {1, 1, 1},
+                        {1, 0, 0},
+                        {1, 0, 0},
+                        {1, 1, 1}};
+        int[][] darts = {{3, 0},
+                         {4, 0}};
+        int[] expected = {5, 0};
 
         validate(grid, darts, expected);
     }
