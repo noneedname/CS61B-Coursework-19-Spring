@@ -71,11 +71,17 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public boolean containsKey(K key) {
+        if (key == null) {
+            throw new IllegalArgumentException("calls containsKey() with a null key");
+        }
         return get(key) != null;
     }
 
     @Override
     public V get(K key) {
+        if (key == null) {
+            throw new IllegalArgumentException("calls get() with a null key");
+        }
         Node foundNode = get(root, key);
         return foundNode == null ? null : foundNode.value;
     }

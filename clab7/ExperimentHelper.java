@@ -15,7 +15,14 @@ public class ExperimentHelper {
      *  N = 8, OIPL: 13
      */
     public static int optimalIPL(int N) {
-        return 0;
+        int maxDepth = (int) Math.floor(Math.log(N) / Math.log(2));
+        double totalLength = 0;
+        for (int i = 0; i < maxDepth; i++) {
+            totalLength += Math.pow(2, i) * i;
+        }
+        // calculate the leaf nodes.
+        totalLength += (N - Math.pow(2, maxDepth) + 1) * maxDepth;
+        return (int) totalLength;
     }
 
     /** Returns the average depth for nodes in an optimal BST of
@@ -27,6 +34,30 @@ public class ExperimentHelper {
      * @return
      */
     public static double optimalAverageDepth(int N) {
-        return 0;
+        return 1.0 * optimalIPL(N) / N;
+    }
+
+    public static void insertRandomNumber(BST<Integer> bst) {
+        int random = RandomGenerator.getRandomInt(10000);
+        while (bst.contains(random)) {
+            random = RandomGenerator.getRandomInt(10000);
+        }
+        bst.add(random);
+    }
+
+    public static void deleteRandomUnit(BST<Integer> bst) {
+        int random = RandomGenerator.getRandomInt(10000);
+        while (!bst.contains(random)) {
+            random = RandomGenerator.getRandomInt(10000);
+        }
+        bst.deleteTakingSuccessor(random);
+    }
+
+    public static void deleteRandomUnit2(BST<Integer> bst) {
+        int random = RandomGenerator.getRandomInt(10000);
+        while (!bst.contains(random)) {
+            random = RandomGenerator.getRandomInt(10000);
+        }
+        bst.deleteTakingRandom(random);
     }
 }
