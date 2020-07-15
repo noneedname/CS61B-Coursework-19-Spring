@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * A String-like class that allows users to add and remove characters in the String
  * in constant time and have a constant-time hash function. Used for the Rabin-Karp
@@ -17,13 +20,19 @@ class RollingString{
      */
     static final int PRIMEBASE = 6113;
 
+    Queue<Character> rollCharQueue;
+
     /**
      * Initializes a RollingString with a current value of String s.
      * s must be the same length as the maximum length.
      */
     public RollingString(String s, int length) {
         assert(s.length() == length);
-        /* FIX ME */
+        rollCharQueue = new LinkedList<>();
+
+        for (char c : s.toCharArray()) {
+            rollCharQueue.add(c);
+        }
     }
 
     /**
@@ -32,7 +41,8 @@ class RollingString{
      * Should be a constant-time operation.
      */
     public void addChar(char c) {
-        /* FIX ME */
+        rollCharQueue.add(c);
+        rollCharQueue.poll();
     }
 
 
@@ -43,8 +53,10 @@ class RollingString{
      */
     public String toString() {
         StringBuilder strb = new StringBuilder();
-        /* FIX ME */
-        return "";
+        for (char c : rollCharQueue) {
+            strb.append(c);
+        }
+        return strb.toString();
     }
 
     /**
@@ -52,8 +64,7 @@ class RollingString{
      * Should be a constant-time operation.
      */
     public int length() {
-        /* FIX ME */
-        return -1;
+        return rollCharQueue.size();
     }
 
 
@@ -64,8 +75,12 @@ class RollingString{
      */
     @Override
     public boolean equals(Object o) {
-        /* FIX ME */
-        return false;
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        } else if (this == o) {
+            return true;
+        }
+        return this.toString().equals(o.toString());
     }
 
     /**
@@ -74,7 +89,10 @@ class RollingString{
      */
     @Override
     public int hashCode() {
-        /* FIX ME */
-        return -1;
+        int hashcode = 0;
+        for (char c : rollCharQueue) {
+            hashcode = (hashcode * UNIQUECHARS + (int) c) % PRIMEBASE;
+        }
+        return hashcode;
     }
 }
